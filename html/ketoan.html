@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần mềm tính thuế thu nhập cá nhân</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <button onclick="showPersonalInfo()">Thông tin cá nhân</button>
+            <button onclick="showSetReduction()">Thiết lập mức giảm trừ</button>
+            <button onclick="showTestThue()">Tính thử thuế</button>
+            <button onclick="showMonthlyTax()">Tính thuế 1 tháng</button>
+            <button onclick="showAnnualTax()">Quyết toán thuế 1 năm</button>
+            <button onclick="showEmployeeTax()">Xem thuế nhân viên</button>
+            <button onclick="showManageDepartments()">Quản lý phòng ban</button>
+            <button onclick="showManageEmployees()">Quản lý nhân viên</button>
+            <button onclick="logout()" class="logout-button">Đăng xuất</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Phần mềm tính thuế thu nhập cá nhân</h1>
+                <div class="login-role">
+                    <span id="user-role"><strong></strong></span>
+                </div>
+            </div>
+
+            <!-- Thông tin cá nhân -->
+            <div id="personalInfo" class="section">
+                <h2>Thông Tin Cá Nhân</h2>
+                <label for="name">Họ và tên:</label>
+                <input type="text" id="name" disabled>
+
+                <label for="position">Chức vụ:</label>
+                <input type="text" id="position" disabled>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" disabled>
+
+                <label for="phone">Số điện thoại:</label>
+                <input type="tel" id="phone" disabled>
+
+                <label for="dependents">Số người phụ thuộc:</label>
+                <input type="number" id="dependents" disabled>
+
+                <label for="salary">Lương hàng tháng:</label>
+                <input type="number" id="salary" disabled>
+            </div>
+
+            <!-- Tính thử thuế -->
+            <div id="taxCalculation" class="section" style="display: none;">
+                <h2>Tính thử thuế</h2>
+                <p>
+                    <strong>Hướng dẫn cách tính:</strong><br>
+                    - Giảm trừ cho bản thân: 11.000.000 VND/tháng.<br>
+                    - Giảm trừ cho mỗi người phụ thuộc: 4.400.000 VND/tháng.<br>
+                    - Thu nhập chịu thuế = Lương - Tổng mức giảm trừ.<br>
+                    - Thuế thu nhập cá nhân được tính theo biểu thuế lũy tiến từng phần.
+                </p>
+                <p>
+                    <strong>Biểu thuế lũy tiến từng phần:</strong><br>
+                    - 5% cho thu nhập đến 5.000.000 VND.<br>
+                    - 10% cho phần thu nhập từ 5.000.001 đến 10.000.000 VND.<br>
+                    - 15% cho phần thu nhập từ 10.000.001 đến 18.000.000 VND.<br>
+                    - 20% cho phần thu nhập từ 18.000.001 đến 32.000.000 VND.<br>
+                    - 25% cho phần thu nhập từ 32.000.001 đến 52.000.000 VND.<br>
+                    - 30% cho phần thu nhập từ 52.000.001 đến 80.000.000 VND.<br>
+                    - 35% cho phần thu nhập trên 80.000.000 VND.
+                </p>
+                <label for="salary">Lương hàng tháng:</label>
+                <input type="number" id="salary1" placeholder="Nhập lương hàng tháng">
+
+                <label for="dependent">Số người phụ thuộc:</label>
+                <input type="number" id="dependent1" placeholder="Nhập số người phụ thuộc" min="0">
+
+                <button onclick="calculateTestTax()">Tính Thuế</button>
+                <table id="testTaxTable" class="output-table"></table>
+            </div>
+
+            <!-- Tính thuế 1 tháng -->
+            <div id="monthlyTax" class="section hidden" style="display: none;">
+                <!-- Kết quả sẽ được cập nhật ở đây bởi JavaScript -->
+
+            </div>
+
+            <!-- Quyết toán thuế 1 năm -->
+            <div id="annualTax" class="section hidden">
+                <h3>Kết quả quyết toán thuế 1 năm</h3>
+                <label for="yearSelect">Chọn năm:</label>
+                <select id="yearSelect" onchange="loadAnnualTax()">
+                    <!-- Các tùy chọn năm sẽ được tạo động -->
+                </select>
+                <table id="annual-tax-table" class="output-table">
+                    <!-- Dữ liệu thuế sẽ được hiển thị tại đây -->
+                </table>
+                <button onclick="exportToExcel()">Xuất ra Excel</button>
+            </div>
+
+
+            <!-- Thiết lập mức giảm trừ -->
+            <div id="setReduction" class="section" style="display: none;">
+                <h2>Thiết lập mức giảm trừ cá nhân</h2>
+                <label for="employeeId">ID nhân viên:</label>
+                <input type="text" id="employeeId2" placeholder="Nhập ID nhân viên">
+                <label for="salary">Lương hàng tháng:</label>
+                <input type="number" id="salary2" placeholder="Nhập lương hàng tháng">
+                <label for="dependents">Số người phụ thuộc:</label>
+                <input type="number" id="dependents2" placeholder="Nhập số người phụ thuộc">
+                <button onclick="saveReduction()">Lưu</button>
+            </div>
+
+            <!-- Xem thuế nhân viên -->
+            <div id="employeeTax" class="section" style="display: none;">
+                <h2>Xem thuế nhân viên</h2>
+
+                <!-- Bảng hiển thị thông tin nhân viên và thuế -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Họ tên</th>
+                            <th>Chức vụ</th>
+                            <th>Lương</th>
+                            <th>Số người phụ thuộc</th>
+                            <th>Thuế thu nhập cá nhân</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTaxTable">
+                        <!-- Dữ liệu sẽ được điền từ JavaScript -->
+                    </tbody>
+                </table>
+                <button onclick="exportToExcel()">Xuất ra Excel</button>
+            </div>
+
+            <!-- Quản lý phòng ban -->
+            <div id="manageDepartments" class="section" style="display: none;">
+                <h2>Quản lý phòng ban</h2>
+                <label for="departmentName">Tên phòng ban:</label>
+                <input type="text" id="departmentName" placeholder="Nhập tên phòng ban">
+                <label for="position">Chức vụ trưởng phòng:</label>
+                <input type="text" id="departmentHead" placeholder="Nhập chức vụ trưởng phòng">
+                <label for="email">Email:</label>
+                <input type="email" id="departmentEmail" placeholder="Nhập email">
+                <label for="phone">Số điện thoại:</label>
+                <input type="tel" id="departmentPhone" placeholder="Nhập số điện thoại">
+                <button id="calculateDepartmentTaxButton" onclick="calculateDepartmentTax()">Tính thuế phòng
+                    ban</button>
+                <button id="addDepartmentButton" onclick="addDepartment()">Thêm phòng ban</button>
+
+                <table id="department-list-table" class="output-table">
+                    <!-- Dữ liệu sẽ được hiển thị ở đây -->
+                </table>
+            </div>
+
+            <!-- Quản lý nhân viên -->
+            <div id="employeeList" class="section" style="display: none;">
+
+                <h2>Quản Lý nhân viên</h2>
+                <label for="employeeId">ID nhân viên:</label>
+                <input type="text" id="employeeId" placeholder="Nhập ID nhân viên">
+                <label for="employeeName">Họ tên:</label>
+                <input type="text" id="employeeName" placeholder="Nhập họ tên">
+                <label for="employeePosition">Chức vụ:</label>
+                <input type="text" id="employeePosition" placeholder="Nhập chức vụ">
+                <label for="employeeEmail">Email:</label>
+                <input type="email" id="employeeEmail" placeholder="Nhập email">
+                <label for="employeePhone">Số điện thoại:</label>
+                <input type="tel" id="employeePhone" placeholder="Nhập số điện thoại">
+                <label for="employeeDepartment">Phòng ban:</label>
+                <select id="PosittonSelect" onchange="loadRole()">
+                    <!-- Các tùy chọn năm sẽ được tạo động -->
+                </select>
+                <button onclick="addEmployee()">Thêm nhân viên</button>
+                <table id="employee-list-table" class="output-table">
+                    <!-- Dữ liệu sẽ được hiển thị ở đây -->
+                </table>
+                <button onclick="exportToExcel()">Xuất ra Excel</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Phenikaa University. All rights reserved.</p>
+    </div>
+    <script src="../js/ketoan.js"></script>
+</body>
+
+</html>

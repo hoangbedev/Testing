@@ -1,0 +1,370 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+}
+.container {
+    display: flex;
+    
+}
+.sidebar {
+    width: 250px;
+    background-color: #ff6700;
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+    height: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+.sidebar h2 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+.sidebar button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    color: white;
+    background-color: #ff7f50;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.sidebar button:hover {
+    background-color: #ff4500;
+    transform: scale(1.05);
+}
+.main-content {
+    flex: 1;
+    padding: 20px;
+    position: relative;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+}
+.login-role {
+    background-color: #ff6700;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+.section {
+    margin-top: 20px;
+}
+/* --- Định dạng chung cho các trường input --- */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+    width: 98%; /* Chiều rộng đầy đủ */
+    padding: 8px; /* Khoảng cách bên trong */
+    margin-top: 10px; /* Khoảng cách trên */
+    border: 1px solid #ccc; /* Viền mặc định */
+    border-radius: 8px; /* Bo góc */
+    font-size: 16px; /* Kích thước chữ */
+    font-family: Arial, sans-serif; /* Kiểu chữ */
+    background-color: #ffffff; /* Nền trắng */
+    color: #333; /* Màu chữ */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Hiệu ứng lõm */
+    transition: all 0.3s ease; /* Hiệu ứng mượt */
+}
+
+/* Hover trên input */
+input:hover,
+textarea:hover,
+select:hover {
+    border-color: #007bff; /* Đổi màu viền khi hover */
+    background-color: #f9f9f9; /* Đổi nền nhạt hơn */
+}
+
+/* Khi focus (người dùng nhấn vào) */
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #007bff; /* Viền xanh */
+    outline: none; /* Bỏ viền mặc định */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Đổ bóng xanh nhạt */
+}
+
+/* Disabled (khi input bị khóa) */
+input[disabled],
+textarea[disabled],
+select[disabled] {
+    background-color: #e9ecef; /* Nền xám nhạt */
+    color: #6c757d; /* Chữ xám nhạt */
+    cursor: not-allowed; /* Trỏ chuột không khả dụng */
+}
+
+/* Placeholder (chữ gợi ý trong input) */
+input::placeholder,
+textarea::placeholder {
+    color: #888; /* Màu chữ gợi ý nhạt */
+    font-style: italic; /* Chữ nghiêng */
+}
+
+/* --- Textarea nâng cấp --- */
+textarea {
+    resize: vertical; /* Cho phép thay đổi chiều cao */
+    min-height: 100px; /* Chiều cao tối thiểu */
+}
+
+/* --- Label căn chỉnh với input --- */
+label {
+    display: block; /* Để label nằm trên input */
+    margin-top: 15px; /* Khoảng cách trên */
+    font-size: 16px; /* Kích thước chữ */
+    font-weight: bold; /* Đậm chữ */
+    color: #555; /* Màu chữ tối hơn */
+}
+
+/* --- Responsive (thiết bị di động) --- */
+@media screen and (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 14px; /* Giảm kích thước chữ */
+        padding: 10px; /* Giảm khoảng cách trong */
+    }
+
+    label {
+        font-size: 14px; /* Giảm kích thước chữ của label */
+    }
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+}
+.output-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.output-table th,
+.output-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+.output-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+/* Footer Styles */
+.footer {
+    background-color: #2c3e50; /* Dark background color */
+    color: #ecf0f1; /* Light text color */
+    text-align: center; /* Center the text */
+    padding: 20px 0; /* Add padding for spacing */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.footer p {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.6;
+}
+/* Optional: Hover effect on the footer text */
+.footer p:hover {
+    color: #3498db; /* Change text color on hover */
+}
+
+
+/* Phần bảng hiển thị danh sách nhân viên */
+#employeeList table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.logout-button {
+    margin-left: 20px;
+    padding: 5px 10px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.logout-button:hover {
+    background-color: #c9302c;
+}
+#employeeList th,
+#employeeList td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+#employeeList tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#employeeList tr:hover {
+    background-color: #ddd;
+}
+#employeeList td {
+    color: #333;
+    font-size: 16px;
+}
+#employeeList button {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* --- Dropdown chính --- */
+select {
+    width: 99%; /* Đầy chiều ngang của container */
+    padding: 8px; /* Khoảng cách bên trong */
+    margin-top: 5px; /* Khoảng cách trên */
+    border: 1px solid #ccc; /* Viền mặc định */
+    border-radius: 8px; /* Bo góc */
+    font-size: 16px; /* Kích thước chữ */
+    font-family: Arial, sans-serif; /* Kiểu chữ */
+    background-color: #ffffff; /* Nền trắng */
+    color: #333; /* Màu chữ */
+    cursor: pointer; /* Trỏ chuột */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    transition: all 0.3s ease; /* Hiệu ứng mượt */
+}
+
+/* Khi focus (khi người dùng nhấn vào dropdown) */
+select:focus {
+    border-color: #007bff; /* Đổi màu viền khi focus */
+    outline: none; /* Bỏ viền mặc định của trình duyệt */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Đổ bóng xanh */
+    background-color: #f9f9f9; /* Nền chuyển nhạt */
+}
+
+/* Hover trên dropdown */
+select:hover {
+    background-color: #f2f2f2; /* Đổi màu nền khi hover */
+}
+
+/* --- Nâng cấp các tùy chọn bên trong (nếu trình duyệt hỗ trợ) --- */
+select option {
+    padding: 10px; /* Khoảng cách trong từng tùy chọn */
+    background-color: #ffffff; /* Nền mặc định */
+    color: #333; /* Màu chữ mặc định */
+    font-size: 16px; /* Kích thước chữ */
+}
+
+select option:hover {
+    background-color: #007bff; /* Đổi nền xanh khi hover */
+    color: #ffffff; /* Chữ trắng khi hover */
+}
+
+/* --- Responsive (cho thiết bị di động) --- */
+@media screen and (max-width: 768px) {
+    select {
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+}
+
+/* Định dạng chung cho phần "Xem thuế nhân viên" */
+#employeeTax {
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #f9f9f9; /* Màu nền nhạt */
+    border: 1px solid #ddd; /* Đường viền nhẹ */
+    border-radius: 8px; /* Bo góc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+/* Tiêu đề */
+#employeeTax h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Bảng hiển thị thông tin nhân viên */
+#employeeTax table {
+    width: 100%; /* Chiếm toàn bộ chiều ngang */
+    border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
+    margin-top: 10px;
+    background-color: #fff; /* Màu nền trắng */
+}
+
+/* Header của bảng */
+#employeeTax table thead th {
+    background-color: #555; /* Màu nền xanh */
+    color: white; /* Chữ màu trắng */
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Dòng dữ liệu */
+#employeeTax table tbody td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd; /* Đường kẻ giữa các hàng */
+    font-size: 14px;
+    color: #555;
+}
+
+/* Dòng chẵn và lẻ khác màu */
+#employeeTax table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2; /* Màu nền cho dòng lẻ */
+}
+
+#employeeTax table tbody tr:nth-child(even) {
+    background-color: #ffffff; /* Màu nền cho dòng chẵn */
+}
+
+/* Hover trên dòng dữ liệu */
+#employeeTax table tbody tr:hover {
+    background-color: #f1f8ff; /* Màu nền khi hover */
+}
+
+/* Canh giữa và làm nổi bật các ô dữ liệu đặc biệt */
+#employeeTax table tbody td:nth-child(1), /* ID */
+#employeeTax table tbody td:nth-child(4), /* Lương */
+#employeeTax table tbody td:nth-child(6)  /* Thuế thu nhập cá nhân */ {
+    text-align: center;
+    font-weight: bold;
+    color: #555; /* Màu xanh nổi bật */
+}
+
+/* Định dạng nếu bảng không có dữ liệu */
+#employeeTax table tbody:empty:before {
+    content: "Chưa có dữ liệu để hiển thị.";
+    display: block;
+    text-align: center;
+    padding: 20px;
+    color: #999;
+    font-size: 14px;
+}
